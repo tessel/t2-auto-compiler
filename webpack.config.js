@@ -19,30 +19,11 @@ const entry = fs.readdirSync('functions')
 module.exports = {
   target: 'node',
   entry,
-  output: {
-    path: 'dist',
-    filename: '[name]/index.js',
-    libraryTarget: 'commonjs2'
-  },
-  resolve: {
-    modules: [ 'node_modules', 'lib' ],
-    alias: {
-      'shep-config': path.resolve(`config/${env}.js`)
-    }
-  },
-  externals: {
-    'aws-sdk': 'aws-sdk'
-  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loader: 'source-map-loader'
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/
+        loader: 'babel-loader'
       },
       {
         test: /\.json$/,
@@ -50,5 +31,15 @@ module.exports = {
       }
     ]
   },
-  devtool: 'source-map'
+  output: {
+    path: 'dist',
+    filename: '[name]/index.js',
+    libraryTarget: 'commonjs2'
+  },
+  externals: {
+    'aws-sdk': 'aws-sdk'
+  },
+  resolve: {
+    modules: [ 'node_modules', 'lib' ]
+  }
 }
