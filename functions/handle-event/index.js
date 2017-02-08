@@ -1,7 +1,5 @@
-import 'source-map-support/register'
-
 import Promise from 'bluebird'
-import * as events from '../../lib/events'
+import * as events from '../../lib/events/index'
 
 function processEvent (record) {
   const data = JSON.parse(record.Sns.Message)

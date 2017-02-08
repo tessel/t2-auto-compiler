@@ -6,6 +6,8 @@ An auto cross compiler for npm packages that use [t2-compiler](https://github.co
 
 ## Building Packages
 
+- `yarn build` to build
+
 ## Server Infrastructure
 
 - Auth is handled by aws roles and groups, human operators deploying need to be in the `t2-auto-compiler` group
