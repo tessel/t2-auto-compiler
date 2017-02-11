@@ -1,5 +1,9 @@
 import Promise from 'bluebird'
-import * as events from '../../lib/events/index'
+import timer from '../../lib/events/timer'
+
+const events = {
+  timer
+}
 
 function processEvent (record) {
   const data = JSON.parse(record.Sns.Message)
