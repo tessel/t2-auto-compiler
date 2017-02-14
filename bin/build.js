@@ -18,10 +18,9 @@ const external = [
 
 const pattern = process.env.PATTERN || '*'
 
-function build (name) {
-  const dest = join('dist', name, 'index.js')
+function build (entry, dest) {
   return rollup({
-    entry: join('functions', name, 'index.js'),
+    entry,
     external,
     plugins: [
       async(),
@@ -50,10 +49,16 @@ function copyNodeModules (name) {
 
 const compile = fs.readdirSync('functions')
   .filter(minimatch.filter(pattern))
-  .map(name => Promise.all([
-    build(name),
-    copyNodeModules(name)
-  ]))
+  .map(name => {
+    const entry = join('functions', name, 'index.js')
+    const dest = join('dist', name, 'index.js')
+    return Promise.all([
+      build(entry, dest),
+      copyNodeModules(name)
+    ])
+  })
+
+compile.push(build('lib/scan-registry.js', 'dist/scan-registry.js'))
 
 Promise.all(compile).then(() => {
   console.log('Compile complete')
