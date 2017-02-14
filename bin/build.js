@@ -11,7 +11,7 @@ const { join } = require('path')
 const { rollup } = require('rollup')
 const { dependencies } = require('../package')
 
-const debug = Debug('t2c:build')
+const debug = prefix => Debug(`t2c:build:${prefix}`)
 
 const external = [
   ...Object.keys(dependencies),
@@ -21,7 +21,8 @@ const external = [
 const pattern = process.env.PATTERN || '*'
 
 function build (entry, dest) {
-  debug(`Building ${dest}`)
+  const log = debug(`rollup ${entry}`)
+  log('starting')
   return rollup({
     entry,
     external,
@@ -40,19 +41,19 @@ function build (entry, dest) {
     sourceMap: false,
     dest
   })).then(() => {
-    debug(`Wrote ${dest}`)
+    log(`Wrote ${dest}`)
   })
 }
 
 function setupNodeModules (name) {
   const dest = `dist/${name}/`
-  const logger = Debug(`t2c:build:${name}`)
-  logger(`Installing production node modules into ${dest}`)
+  const log = debug(`yarn ${name}`)
+  log(`Installing production node modules into ${dest}`)
   return Promise.all([
     fs.copyAsync('./package.json', join(dest, 'package.json')),
     fs.copyAsync('./yarn.lock', join(dest, 'yarn.lock'))
   ]).then(() => execa.shell('yarn install --prod', { cwd: dest }))
-    .then(() => logger('done'))
+    .then(() => log('done'))
 }
 
 const compile = fs.readdirSync('functions')
