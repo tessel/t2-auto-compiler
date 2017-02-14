@@ -21,7 +21,7 @@ const events = {
 function processEvent (record) {
   const data = JSON.parse(record.Sns.Message)
   if (typeof events[data.type] === 'function') {
-    return events[data.type](data)
+    return events[data.type](data.data)
   } else {
     console.error(`Unknown event type ${data.type}`, record.Sns.Message)
   }
