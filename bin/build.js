@@ -67,7 +67,8 @@ const compile = fs.readdirSync('functions')
     ])
   })
 
-compile.push(build('lib/scan-registry.js', 'dist/scan-registry.js'))
+compile.push(build('lib/scan-and-save.js', 'dist/scan-and-save.js'))
+compile.push(build('lib/scan-and-publish.js', 'dist/scan-and-publish.js'))
 
 Promise.all(compile).then(() => {
   console.log('Compile complete')

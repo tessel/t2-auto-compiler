@@ -16,6 +16,7 @@
     </select>
     <input type="search" id="search" value="">
   </div>
+  <div id="lastCount"></div>
   <pre id="results"></pre>
 <script type="text/javascript" src="list.js"></script>
 <script type="text/javascript">
@@ -26,6 +27,12 @@
     prefix: 'packages/',
     selectorId: 'package-selector'
   })
+
+  window.fetch('./settings/registry-last-event-id.json')
+    .then(response => response.json())
+    .then(count => {
+      document.getElementById('lastCount').textContent = `Last Sequence: ${count}`
+    })
 </script>
 </body>
 </html>
