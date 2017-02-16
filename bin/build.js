@@ -15,7 +15,8 @@ const debug = prefix => Debug(`t2c:build:${prefix}`)
 
 const external = [
   ...Object.keys(dependencies),
-  'https'
+  'https',
+  'url'
 ]
 
 const pattern = process.env.PATTERN || '*'
@@ -33,7 +34,8 @@ function build (entry, dest) {
           arrow: false,
           generator: false,
           templateString: false
-        }
+        },
+        objectAssign: 'Object.assign'
       })
     ]
   }).then(bundle => bundle.write({

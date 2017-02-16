@@ -2,7 +2,6 @@ import Promise from 'bluebird'
 import { listener } from '../../lib/listener'
 import { publish as snsPublish } from '../../lib/sns'
 import { scanTimeout } from '../../lib/config'
-import { tarballUrl } from '../../lib/registry'
 import { savePackageInfo } from '../../lib/pkgs'
 
 export function handler (event, context, callback) {
@@ -43,11 +42,8 @@ function newPackage (newPackage) {
     return
   }
 
-  return Promise.map(Object.keys(versions), async version => {
-    const url = await tarballUrl(name, version, doc)
-    return snsPublish({
-      type: 'detect',
-      data: { name, version, url }
-    })
+  return snsPublish({
+    type: 'detect',
+    data: { name }
   })
 }

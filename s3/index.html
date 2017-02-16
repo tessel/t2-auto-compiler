@@ -20,19 +20,28 @@
   <pre id="results"></pre>
 <script type="text/javascript" src="list.js"></script>
 <script type="text/javascript">
-  window.liveSearch({
-    searchBoxId: 'search',
-    resultsDivId: 'results',
-    bucket: 't2c.tessel.io',
-    prefix: 'packages/',
-    selectorId: 'package-selector'
-  })
+const { liveSearch, fetch } = window
+liveSearch({
+  searchBoxId: 'search',
+  resultsDivId: 'results',
+  bucket: 't2c.tessel.io',
+  prefix: 'packages/',
+  selectorId: 'package-selector'
+})
 
-  window.fetch('./settings/registry-last-event-id.json')
-    .then(response => response.json())
-    .then(count => {
-      document.getElementById('lastCount').textContent = `Last Sequence: ${count}`
-    })
+Promise.all([
+  fetch('./settings/registry-last-event-id.json').then(resp => resp.json()),
+  fetch('./settings/registry-info.json').then(resp => resp.json()).then(info => info.update_seq)
+]).then(counts => {
+  const lastProcessed = counts[0]
+  const availableCount = counts[1]
+  const precentage = Math.round(lastProcessed / availableCount * 10000) / 100
+  document.getElementById('lastCount').innerHTML = `
+    Last Sequence Processed: ${lastProcessed}<br/>
+    Last Sequence Available: ${availableCount}<br/>
+    ${precentage}% Processed
+  `
+})
 </script>
 </body>
 </html>
