@@ -1,5 +1,4 @@
 {
   "FunctionName": "t2-compiler-handle-event",
-  "Description": "Handles all events sent to SNS: t2-compiler-jobs",
-  "Timeout": 300
+  "Description": "Handles all events sent to SNS: t2-compiler-jobs"
 }

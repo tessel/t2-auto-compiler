@@ -6,6 +6,10 @@
     #search {
       width: 400px;
     }
+    #results {
+      font-family: monospace;
+      white-space: pre;
+    }
   </style>
 </head>
 <body>
@@ -17,10 +21,9 @@
     <input type="search" id="search" value="">
   </div>
   <div id="lastCount"></div>
-  <pre id="results"></pre>
+  <div id="results"></div>
 <script type="text/javascript" src="list.js"></script>
 <script type="text/javascript">
-const { liveSearch, fetch } = window
 liveSearch({
   searchBoxId: 'search',
   resultsDivId: 'results',

@@ -1,6 +1,7 @@
 {
   "Handler": "index.handler",
   "Role": "arn:aws:iam::047869558202:role/t2-compiler",
-  "Timeout": 10,
-  "Runtime": "nodejs4.3"
+  "Timeout": 300,
+  "Runtime": "nodejs6.10",
+  "MemorySize": 256
 }
