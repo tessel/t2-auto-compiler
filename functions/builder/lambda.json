@@ -1,0 +1,4 @@
+{
+  "FunctionName": "t2-auto-compiler-builder",
+  "Description": "Listens for kinesis events and builds new packages as needed"
+}

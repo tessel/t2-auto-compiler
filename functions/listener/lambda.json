@@ -1,0 +1,4 @@
+{
+  "FunctionName": "t2-auto-compiler-listener",
+  "Description": "listens to the npm registry for new publishes and notifies kinesis"
+}
